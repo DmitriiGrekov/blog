@@ -1,0 +1,74 @@
+{% extends 'blog/base.html'%}
+{% block title%}Главная {% endblock%}
+
+
+
+{% block service %}
+{% for s in services%}
+
+<li><a href="{{s.get_absolute_url}}">{{s.title}}</a></li>
+
+
+{% endfor %}
+{% endblock%}
+
+
+
+{% block content %}
+<div class="row">
+			<div class="col-lg-8 main-content">
+				<ul>
+                    {% if posts %}
+                    {% for post in posts%}
+                <li class='main-item mb-3 pr-2'>
+						<div class="card mb-3">
+                         <div class="row">
+                           <div class="col-md-4">
+                               <img src="{{post.image.url}}" style='height: 100%' class="card-img" alt="...">
+                           </div>
+                           <div class="col-md-8">
+                             <div class="card-body">
+                                 <a href="{{post.get_absolute_url}}" class='text-dark item-url'><h5 class="card-title mb-0">{{post.title}}</h5></a>
+                                 <p class="card-text">{{post.body|truncatechars:60}}</p>
+                               <div class="row">
+                               	<div class="col-lg-6">
+                                    
+                                    <a class='btn btn-secondary' href="{{post.get_absolute_url}}" style='text-decoration: none;color:#fff;'>Читать</a>
+                               	</div>
+                               	<div class="col-lg-6">
+                                    <p class="card-text"><small class="text-muted">Создано {{post.publish}}</small></p>
+                               	</div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+					</li>
+
+                    {%endfor%}
+                </ul>
+
+        {% include 'blog/pagination.html' with page=posts%}
+                {% else %}
+                <h3>Постов еще нет</h3>
+
+                {% endif %}
+
+			</div>
+
+
+			<div class="col-lg-4  mb-3 main-sidebar">
+				
+				<div class="list-group sticky-top mt-3">
+
+					<h1 class = 'sidebar-category pl-3'>Сервисы</h1>
+                    {% for s in services%}
+
+                    <a href="{{s.get_absolute_url}}" class="list-group-item list-group-item-action">{{s.title}}</a>
+                    {% endfor %}
+                </div>
+			</div>
+		</div>
+
+    
+        {% endblock%}

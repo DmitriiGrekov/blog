@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
 	<link href="https://fonts.googleapis.com/css2?family=Cuprum&display=swap" rel="stylesheet">
@@ -16,12 +17,12 @@
 <header class='mb-4'>
 	<div class="container p-0">
 		<div class="header-title">
-			<h5>Блог начинающего программиста</h5>
+			<h5 class='ml-3'>Блог начинающего программиста</h5>
 		</div>
 		<nav >
   <ul class="top-menu">
       <li><a href="{% url 'blog:list'%}">Главная</a></li>
-    <li class="dropdown-standart"><a href="" class="dropdown">Сервисы</a>
+    <li class="dropdown-standart"><a class='disabled' href="" class="dropdown">Сервисы</a>
       <ul class="submenu-standart">
           {% block service %}
 

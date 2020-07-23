@@ -1,0 +1,106 @@
+{% extends 'blog/base.html'%}	
+{% block title%}{{book.title}} {% endblock%}
+
+{% block service %}
+{% for s in services%}
+
+<li><a href="{{s.get_absolute_url}}">{{s.title}}</a></li>
+
+
+{% endfor %}
+{% endblock%}
+
+
+
+{% block content %}
+		<div class="row">
+			<div class="col-lg-8 main-content detail_content">
+				<div class="card  mb-3">
+                    <img class="card-img-top" src="{{book.books_image.url}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{book.title}}</h5>
+                <p class="card-text mb-0"><small class="text-muted">Добавлено {{book.publish}}</small></p>
+                <p class='card-text mb-3'><small class='text-muted'>Категория {{book.category}}</small></p>
+                {{book.description|safe}}
+                {{book.pk}}
+                    </br>
+                    <a class='mt-3 btn btn-primary' href='{% url 'books_app:download_book' book.slug%}'>Скачать книгу</a>
+            </div>
+          </div>
+         {% with comments.count as total_comments %}
+          <p class ='ml-3' style='font-size: 19px;'>Комментариев ({{total_comments}})</p>
+          {% endwith %}
+          {% for comment in comments %}
+          
+          <div class="card mb-3">
+  
+            <div class="card-body">
+                <h5 class="card-title">{{comment.name}}</h5>
+                <p class="card-text">{{comment.body}}</p>
+                <p class="card-text"><small class="text-muted">{{comment.date}}</small></p>
+    
+            </div>
+          </div>
+
+
+
+          {% endfor %}
+
+
+          <form class='' action = '' method = 'post'>
+              {% csrf_token %}
+            <p class='ml-3' style='font-size: 19px;'>Добавить комментарий</p>
+  <div class="row mb-2">
+    <div class="col">
+        {{form.name}}
+    </div>
+    <div class="col">
+        {{form.email}}
+    </div>
+  </div>
+  {{form.body}}
+  <input type='submit' class='btn btn-primary mb-4' value= 'Отправить'>
+  
+</form>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			</div>
+			<div class="col-lg-4 main-sidebar">
+				<div class="list-group sticky-top mt-3">
+					<h1 class = 'sidebar-category pl-3'>Категории</h1>
+                    {% for category in categories %}
+
+                    <a href="{{category.get_absolute_url}}" class="list-group-item list-group-item-action">{{category.title}}</a>
+                    {% endfor %}
+
+</div>
+			</div>
+		</div>
+
+
+		
+		
+	</div>
+
+
+
+    {% endblock%}	

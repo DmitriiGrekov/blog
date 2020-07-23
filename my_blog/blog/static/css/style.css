@@ -113,6 +113,10 @@ a {text-decoration: none;}
   margin: 20px auto;
   padding: 0 20px;
 }
+a.disabled{
+    pointer-events: none;
+}
+
 
 @media(max-width:768px) {
   .top-menu li {
@@ -159,11 +163,21 @@ a {text-decoration: none;}
 }
 
 .main-sidebar{
-	padding: 0;
+	padding-left:30px;
+    padding-right:0px;
 	font-family: 'Sora', sans-serif;
+
 }
 
+@media(max-width:768px){
+    .main-sidebar{
+        padding:0px;
+    }
 
+
+
+
+}
 a.item-url{
 	text-decoration: none;
 	margin-bottom: 0;

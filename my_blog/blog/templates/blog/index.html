@@ -20,7 +20,7 @@
 				<ul>
                     {% if posts %}
                     {% for post in posts%}
-                <li class='main-item mb-3 pr-2'>
+                <li class='main-item mb-3'>
 						<div class="card mb-3">
                          <div class="row">
                            <div class="col-md-4">
@@ -51,21 +51,53 @@
         {% include 'blog/pagination.html' with page=posts%}
                 {% else%} 
                 <h3 class='card-text'>Постов еще нет</h3>
-
-                {% endif %}
+{% endif %}
 
 			</div>
 
 
-			<div class="col-lg-4  mb-3 main-sidebar">
-				<nav class="navbar p-0 mb-3">
-                    <form class="form-inline" action='{% url 'blog:list'%}'>
+			<div class="col-lg-4 mb-3 main-sidebar">
+
+
+                    <div class='container'>
                     
-                  <input class="form-control" type="search" placeholder="Поиск" aria-label="Поиск" name='search'>
+                    <nav class="navbar text-center p-0 mb-3">
+                    <form class="form-inline" action='{% url 'blog:list'%}'>
+                        <div class='row'>
+ <div class='col-sm-8 col-8'>
+                        
+                        
+                  <input class="form-control  w-100" type="search" placeholder="Поиск" aria-label="Поиск" name='search'>
+                        
+                        </div>  
+
+                        <div class='col-sm-4 col-4'>
+                        
+                        
+                        
                   <button class="btn btn-outline-success ml-2" type="submit">Поиск</button>
+                        </div>
+            
+            
+            
+            
+            
+            </div> 
                 </form>
               </nav>
-				<div class="list-group sticky-top mt-3">
+
+                    
+                    
+                    </div>
+
+
+
+
+
+
+
+
+								<div class="list-group sticky-top mt-3">
 
 					<h1 class = 'sidebar-category pl-3'>Категории</h1>
                     {% for category in categories %}

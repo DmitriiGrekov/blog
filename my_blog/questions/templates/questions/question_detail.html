@@ -15,7 +15,7 @@
 {% block content %}
 		<div class="row">
 			<div class="col-lg-8 main-content detail_content">
-				<div class="card mr-3 mb-3">
+				<div class="card  mb-3">
             <div class="card-body">
                 <h5 class="card-title">{{question.title}}</h5>
                 <p class="card-text mb-0"><small class="text-muted">Автор {{question.name}}: Создано {{question.publish}}</small></p>
@@ -40,7 +40,7 @@
           {% endwith %}
           {% for comment in comments %}
           
-          <div class="card mr-3 mb-3">
+          <div class="card mb-3">
   
             <div class="card-body">
                 <h5 class="card-title">{{comment.name}}</h5>
@@ -55,7 +55,7 @@
           {% endfor %}
 
 
-          <form class='mr-3' action = '' method = 'post'>
+          <form class='' action = '' method = 'post'>
               {% csrf_token %}
             <p class='ml-3' style='font-size: 19px;'>Добавить комментарий</p>
   <div class="row mb-2">

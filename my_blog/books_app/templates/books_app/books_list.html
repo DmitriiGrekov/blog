@@ -1,0 +1,110 @@
+{% extends 'blog/base.html'%}
+{% block title%}Главная {% endblock%}
+
+
+
+{% block service %}
+{% for s in services%}
+
+<li><a href="{{s.get_absolute_url}}">{{s.title}}</a></li>
+
+
+{% endfor %}
+{% endblock%}
+
+
+
+{% block content %}
+<div class="row">
+			<div class="col-lg-8 main-content">
+				<ul>
+                    {% if books %}
+                    {% for book in books%}
+                <li class='main-item mb-3 '>
+						<div class="card mb-3">
+                         <div class="row">
+                           <div class="col-md-4">
+                               <img src="{{book.books_image.url}}" style='height: 100%' class="card-img" alt="...">
+                           </div>
+                           <div class="col-md-8">
+                             <div class="card-body">
+                                 <a href="{{book.get_absolute_url}}" class='text-dark item-url'><h5 class="card-title mb-0">{{book.title}}</h5></a>
+                                 <p class="card-text">{{book.description|truncatechars:60}}</p>
+                               <div class="row">
+                               	<div class="col-lg-6">
+                                    
+                                    <a class='btn btn-secondary' href="{{book.get_absolute_url}}" style='text-decoration: none;color:#fff;'>Читать</a>
+                               	</div>
+                               	<div class="col-lg-6">
+                                    <p class="card-text"><small class="text-muted">Создано {{book.publish}}</small></p>
+                               	</div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+					</li>
+
+                    {%endfor%}
+                </ul>
+
+        {% include 'blog/pagination.html' with page=posts%}
+                {% else%} 
+                <h3 class='card-text'>Постов еще нет</h3>
+
+                {% endif %}
+
+			</div>
+
+
+			<div class="col-lg-4  mb-3 main-sidebar">
+            <div class='container'>
+                        
+                    <nav class="navbar text-center p-0 mb-3">
+                    <form class="form-inline" action='{% url 'blog:list'%}'>
+                        <div class='row'>
+             <div class='col-sm-8 col-8'>
+                        
+                        
+                  <input class="form-control  w-100" type="search" placeholder="Поиск" aria-label="Поиск" name='search'>
+                        
+                        </div>  
+
+                        <div class='col-sm-4 col-4'>
+                        
+                        
+                        
+                  <button class="btn btn-outline-success ml-2" type="submit">Поиск</button>
+                        </div>
+            
+            
+            
+            
+            
+            </div> 
+                </form>
+              </nav>
+
+                    
+                    
+                    </div>
+
+
+
+
+
+
+
+				<div class="list-group sticky-top mt-3">
+
+					<h1 class = 'sidebar-category pl-3'>Категории</h1>
+                    {% for category in categories %}
+
+                    <a href="{{category.get_absolute_url}}" class="list-group-item list-group-item-action">{{category.title}}</a>
+                    {% endfor %}
+                </div>
+			</div>
+		</div>
+
+    
+        {% endblock%}

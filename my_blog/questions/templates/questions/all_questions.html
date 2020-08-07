@@ -1,23 +1,17 @@
 {% extends 'blog/base.html'%}
-{% block title%}Главная {% endblock%}
+{% block title%}Вопросы{% endblock%}
 
 
-
-{% block service %}
-{% for s in services%}
-
-<li><a href="{{s.get_absolute_url}}">{{s.title}}</a></li>
-
-
-{% endfor %}
-{% endblock%}
 
 
 
 {% block content %}
 <div class="row">
 			<div class="col-lg-8 main-content">
-				<ul>
+
+                <div class='container-fluid'>
+                
+                <ul>
                     {% if posts%}
                     {% for post in posts%}
                 <li class='main-item mb-3'>
@@ -53,7 +47,14 @@
 
                 </ul>
 
-			</div>
+
+                
+                
+                </div>
+
+
+                
+                </div>
 
 
 			<div class="col-lg-4  mb-3 main-sidebar">
@@ -110,3 +111,33 @@
 
     
         {% endblock%}
+{% block script %}
+<script type='text/javascript'>
+    function ajaxPagination(){
+        $('ul.pagination a.page-link').each((index,el)=>{
+            $(el).click((e)=>{
+                e.preventDefault()
+                let page_url = $(el).attr('href')
+
+                var dfd = $.ajax({
+                    url:page_url,
+                    type:"GET",
+                    async:true,
+                    success:(data)=>{
+                        $('.main-content').empty()
+                    
+                        $('.main-content').append($(data).find('.main-content').html())
+                        ajaxPagination()
+                    }
+                })
+            })
+        })
+    }
+
+
+$(document).ready(function(){
+    ajaxPagination()
+})
+
+</script>
+{% endblock%}

@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404
+from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from .models import Article,Category
@@ -7,15 +8,17 @@ from django.db.models import Q
 from services.models import ServiceModel
 from services.models import ServicePost
 
+
+
 def list(request):
-    services = ServiceModel.objects.all()
+    #services = ServiceModel.objects.all()
     search_query = request.GET.get('search','')
     if search_query:
         articles = Article.objects.filter(Q(title__icontains = search_query)| Q(body__icontains = search_query))
     else:
         articles = Article.objects.all().filter(status='publish')
     categories = Category.objects.all()
-    paginator = Paginator(articles,10)
+    paginator = Paginator(articles,1)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -24,16 +27,16 @@ def list(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
+    draft_posts = Article.objects.all().filter(status='draft')
 
-    return render(request,'blog/index.html',{"posts":posts,'page':page,'categories':categories,'services':services})
 
+    return render(request,'blog/index.html',{"posts":posts,'page':page,'categories':categories,'draft_posts':draft_posts})
 
 
 
 
 def post_detail(request,year,month,day,post):
     
-    services = ServiceModel.objects.all()
     categoryes = Category.objects.all()
     post = get_object_or_404(Article,slug = post,status = 'publish',publish__year = year,publish__month = month,publish__day=day) 
     comments = post.comments.filter(active = True)
@@ -50,7 +53,7 @@ def post_detail(request,year,month,day,post):
             
 
     form = CommentForm()
-    return render(request,'blog/detail.html',{'post':post,'comments':comments,'form':form,'categories':categoryes,'services':services})
+    return render(request,'blog/detail.html',{'post':post,'comments':comments,'form':form,'categories':categoryes})
 
 def post_category(request,slug):
 
@@ -64,7 +67,7 @@ def post_category(request,slug):
 
     services = ServiceModel.objects.all()
     categories = Category.objects.all()
-    paginator = Paginator(posts, 10)
+    paginator = Paginator(posts, 1)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)

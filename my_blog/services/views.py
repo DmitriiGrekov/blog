@@ -7,10 +7,10 @@ from .forms import CommentForm
 
 def services(request,slug):
     services = ServiceModel.objects.all()
-
     service= ServiceModel.objects.get(slug = slug)
-    articles = ServicePost.objects.all().filter(service=service)
-    paginator = Paginator(articles,10)
+    articles = ServicePost.objects.all().filter(service=service,status = 'publish')
+    draft_articles = ServicePost.objects.all().filter(status ='draft' )
+    paginator = Paginator(articles,1)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -22,13 +22,14 @@ def services(request,slug):
 
     
     
-    return render(request,'services/services_list.html',{'posts':posts,'services':services,'page':page})
+    return render(request,'services/services_list.html',{'posts':posts,'all_service':services,'page':page,'draft_articles':draft_articles})
 
-def service_list(request,slug,ser):
+def service_detail(request,slug,ser):
     service = ServiceModel.objects.get(slug=slug)
     
     services = ServiceModel.objects.all()
-    post = get_object_or_404(ServicePost,service = service ,slug = ser,status = 'publish') 
+    post = get_object_or_404(ServicePost,service = service ,slug = ser) 
+    
 
     comments = post.comments.filter(active = True)
 
@@ -44,7 +45,7 @@ def service_list(request,slug,ser):
             
 
     form = CommentForm()
-    return render(request,'services/services_post.html',{'post':post,'comments':comments,'form':form,'services':services})
+    return render(request,'services/services_post.html',{'post':post,'comments':comments,'form':form,'all_service':services})
 
 
     

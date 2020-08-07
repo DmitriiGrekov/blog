@@ -3,15 +3,6 @@
 
 
 
-{% block service %}
-{% for s in services%}
-
-<li><a href="{{s.get_absolute_url}}">{{s.title}}</a></li>
-
-
-{% endfor %}
-{% endblock%}
-
 
 
 {% block content %}
@@ -22,7 +13,6 @@
             <h5 class='card-text mb-3 text-danger'>{{message}}</h5>
             {% endif %}
             {{form.title}}
-            {{form.name}}
             {{form.email}}
             {{form.tags}}
             {{form.question}}

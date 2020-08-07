@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.http import HttpResponse
@@ -14,7 +15,6 @@ from django.db.models import Q
 
 def show_questions(request):
     all_questions = QuestionsModel.objects.all()
-    services = ServiceModel.objects.all()
     tags = Tag.objects.all()[0:5]
     search_query = request.GET.get('search','')
     if search_query:
@@ -33,13 +33,12 @@ def show_questions(request):
 
 
 
-    return render(request,'questions/all_questions.html',{'posts':posts,'services':services,'tags':tags})
+    return render(request,'questions/all_questions.html',{'posts':posts,'tags':tags})
 
 
 
 def questions_detail(request,slug):
     
-    services = ServiceModel.objects.all()
      
      
     tags = Tag.objects.all()[0:5]
@@ -60,7 +59,7 @@ def questions_detail(request,slug):
     form = CommentForm()
 
 
-    return render(request,'questions/question_detail.html',{'services':services,'question':question,'form':form,'comments':comments,'tags':tags})
+    return render(request,'questions/question_detail.html',{'question':question,'form':form,'comments':comments,'tags':tags})
 
 
 
@@ -73,7 +72,6 @@ def show_tag_questions(request,slug):
         all_questions = all_questions.filter(tags__in=[tag])
 
 
-    services = ServiceModel.objects.all()
     tags = Tag.objects.all()[0:5]
 
     paginator = Paginator(all_questions,10)
@@ -87,9 +85,9 @@ def show_tag_questions(request,slug):
 
 
 
-    return render(request,'questions/tag_questions.html',{'questions':all_questions,'services':services,'tags':tags,})
+    return render(request,'questions/tag_questions.html',{'questions':all_questions,'tags':tags,})
 
-
+@login_required
 def create_questions(request):
     if request.method =='POST':
         form = QuestionForm(request.POST,request.FILES)
@@ -97,7 +95,8 @@ def create_questions(request):
             new_question = form.save(commit = False)
             if QuestionsModel.objects.filter(title = new_question.title).exists():
                 return render(request,'questions/create_question.html',{'form':form,'message':'Такой вопрос уже существует в базе'})
-            
+            user = request.user
+            new_question.user = user
             new_question.save()
             for tag in form.cleaned_data['tags']:
                 new_question.tags.add(tag)

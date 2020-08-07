@@ -1,24 +1,16 @@
 {% extends 'blog/base.html'%}	
 {% block title%}{{question.title}} {% endblock%}
 
-{% block service %}
-{% for s in services%}
-
-<li><a href="{{s.get_absolute_url}}">{{s.title}}</a></li>
-
-
-{% endfor %}
-{% endblock%}
-
 
 
 {% block content %}
 		<div class="row">
 			<div class="col-lg-8 main-content detail_content">
-				<div class="card  mb-3">
+				<div class='container-fluid'>
+                <div class="card  mb-3">
             <div class="card-body">
                 <h5 class="card-title">{{question.title}}</h5>
-                <p class="card-text mb-0"><small class="text-muted">Автор {{question.name}}: Создано {{question.publish}}</small></p>
+                <p class="card-text mb-0"><small class="text-muted">Автор {{question.user.username}}: Создано {{question.publish}}</small></p>
                 <p class='card-text mb-3'><small class='text-muted'>Тэгги: {% for t in question.tags.all%}<a href='{% url 'questions:tag_questions' slug=t.slug%}' class='card-text text-muted'>{{t.name}}</a> {% endfor %}</small></p>
                 <p class='card-text mb-3'>{{question.question}}</p>
                 
@@ -75,21 +67,8 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                
+                </div>
 
 			</div>
 			<div class="col-lg-4 main-sidebar">

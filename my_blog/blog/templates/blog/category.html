@@ -1,8 +1,10 @@
 {% extends 'blog/base.html'%}
-{% block title%}Главная {% endblock%}
+{% block title%}Категория {{category}}{% endblock%}
+
+{% block meta_description%} Самые новые и интересные статьи этого блога {% endblock%}
 
 
-
+{% block meta_keyword%}html, css, javascript, python, php, ajax, django, веб сервисы{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -24,7 +26,7 @@
                                  <p class="card-text">{{post.body|truncatechars:60}}</p>
                                <div class="row">
                                	<div class="col-lg-6">
-                                    <button type="button" class="btn btn-secondary"><a href="{{post.get_absolute_url}}" style='text-decoration: none;color:#fff;'>Читать</a></button>
+                                    <button type="button" class="btn btn-primary"><a href="{{post.get_absolute_url}}" style='text-decoration: none;color:#fff;'>Читать</a></button>
                                	</div>
                                	<div class="col-lg-6">
                                     <p class="card-text"><small class="text-muted">Создано {{post.create}}</small></p>
@@ -72,7 +74,7 @@
                         
                         
                         
-                  <button class="btn btn-outline-success ml-2" type="submit">Поиск</button>
+                  <button class="btn btn-outline-primary ml-2" type="submit">Поиск</button>
                         </div>
             
             

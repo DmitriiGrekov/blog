@@ -85,7 +85,7 @@ def show_tag_questions(request,slug):
 
 
 
-    return render(request,'questions/tag_questions.html',{'questions':all_questions,'tags':tags,})
+    return render(request,'questions/tag_questions.html',{'questions':all_questions,'tags':tags,'tag':tag})
 
 @login_required
 def create_questions(request):

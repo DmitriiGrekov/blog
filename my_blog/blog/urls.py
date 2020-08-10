@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.list,name='list'),
     path('<int:year>/<int:month>/<int:day>/<slug:post>/',views.post_detail,name = 'post_detail'),
     path('category/<slug:slug>/',views.post_category,name = 'category_list'),
+    path('like/',views.post_like,name='like'),
 ]

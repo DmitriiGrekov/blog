@@ -3,6 +3,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from .models import ServicePost,ServiceModel
 from .forms import CommentForm
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
+
 # Create your views here.
 
 def services(request,slug):
@@ -22,7 +27,7 @@ def services(request,slug):
 
     
     
-    return render(request,'services/services_list.html',{'posts':posts,'all_service':services,'page':page,'draft_articles':draft_articles})
+    return render(request,'services/services_list.html',{'posts':posts,'all_service':services,'page':page,'draft_articles':draft_articles,'service':service})
 
 def service_detail(request,slug,ser):
     service = ServiceModel.objects.get(slug=slug)
@@ -49,4 +54,19 @@ def service_detail(request,slug,ser):
 
 
     
-
+@login_required
+@require_POST
+def service_like(request):
+    post_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if post_id and action:
+        try:
+            post = ServicePost.objects.get(id=post_id)
+            if action == 'like':
+                post.service_like.add(request.user)
+            else:
+                post.service_like.remove(request.user)
+            return JsonResponse({'status':'ok'})
+        except:
+            pass
+    return JsonResponse({'status':'ok'})

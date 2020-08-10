@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from django.conf import settings
 # Create your models here.
 
 
@@ -27,6 +28,10 @@ class Books(models.Model):
     books_image = models.ImageField(upload_to = 'books/image/')
     publish = models.DateTimeField(auto_now_add = True)
     category = models.ForeignKey(Category,on_delete = models.CASCADE)
+    meta_description = models.CharField(max_length = 255,verbose_name='Мета дескриптион')
+    meta_keywords = models.CharField(max_length = 255,verbose_name='Meta Keywords')
+
+    users_like = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='books_like',blank=True)
 
 
     def __str__(self):

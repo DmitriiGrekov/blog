@@ -1,0 +1,130 @@
+{% extends 'blog/base.html'%}
+{% block title%}Главная {% endblock%}
+
+{%block robots%}none{% endblock%}
+
+
+
+
+{% block content %}
+<div class="row">
+			<div class="col-lg-8 main-content">
+                <div class='container-fluid'>
+                
+                <ul>
+                
+
+
+                    {% if favourite_articles %}
+                    {% for favourite in favourite_articles%}
+                <li class='main-item mb-3'>
+						<div class="card mb-3">
+                         <div class="row">
+                           <div class="col-md-8">
+                             <div class="card-body">
+                                 <a href="{{favourite.get_absolute_url}}" class='text-dark item-url'><h5 class="card-title mb-0">{{favourite.title}}</h5></a>
+                                 <p class="card-text">{{favourite.body|truncatechars:60}}</p>
+                               <div class="row">
+                               	<div class="col-lg-6">
+                                    
+                                    <a class='btn btn-primary' href="{{favourite.get_absolute_url}}" style='text-decoration: none;color:#fff;'>Читать</a>
+                               	</div>
+                               	<div class="col-lg-6">
+                                    <p class="card-text"><small class="text-muted">Создано {{favourite.publish}}</small></p>
+                               	</div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+					</li>
+
+                    {%endfor%}
+                </ul>
+
+        {% include 'blog/pagination.html' with page=favourite_articles%} {% else%} 
+                <h3 class='card-text'>Постов еще нет</h3>
+{% endif %}
+
+
+
+            			</div>
+
+                
+                
+                </div>	
+
+			<div class="col-lg-4 mb-3 main-sidebar">
+
+
+                    <div class='container-fluid'>
+                    
+                    <nav class="navbar text-center p-0 mb-3">
+                
+
+            
+            
+            
+            
+              </nav>
+
+                    
+                    
+                    </div>
+
+
+
+
+
+
+
+
+								<div class="list-group sticky-top mt-3">
+
+
+          <a class = 'list-group-item list-group-item-action'href="{% url 'accounts:my_questions'%}">Мои вопросы {% with user_question.count as questions%} ({{questions}}){% endwith%} </a>
+
+          <a class = 'list-group-item list-group-item-action'href="{% url 'accounts:favourite_articles'%}">Понравившиеся статьи</a>
+          
+          <a class = 'list-group-item list-group-item-action'href="{% url 'accounts:favourite_books'%}">Понравившиеся книги</a>
+          
+          <a class = 'list-group-item list-group-item-action'href="{% url 'logout'%}">Выйти</a>
+                </div>
+			</div>
+		</div>
+
+    
+        {% endblock%}
+
+
+
+{% block script %}
+<script type='text/javascript'>
+    function ajaxPagination(){
+        $('ul.pagination a.page-link').each((index,el)=>{
+            $(el).click((e)=>{
+                e.preventDefault()
+                let page_url = $(el).attr('href')
+
+                var dfd = $.ajax({
+                    url:page_url,
+                    type:"GET",
+                    async:true,
+                    success:(data)=>{
+                        $('.main-content').empty()
+                    
+                        $('.main-content').append($(data).find('.main-content').html())
+                        ajaxPagination()
+                    }
+                })
+            })
+        })
+    }
+
+
+$(document).ready(function(){
+    ajaxPagination()
+})
+
+</script>
+{% endblock%}

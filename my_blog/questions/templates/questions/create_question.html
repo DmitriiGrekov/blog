@@ -1,6 +1,6 @@
 {% extends 'blog/base.html'%}
-{% block title%}Главная {% endblock%}
-
+{% block title%}Задайте вопрос{% endblock%}
+{% block meta_description%}Добавьте интересующий вас вопрос, чтобы получить на него ответ{% endblock%}
 
 
 
@@ -18,7 +18,7 @@
             {{form.question}}
             <h6 class='card-text'>Загрузите изображения (не обязательно)</h6>{{form.question_image}}</br>
 
-            <button type='submit' class='btn btn-success w-100 mb-5'>Задать вопрос</button> 
+           <button type='submit' class='btn btn-primary w-100 mb-5'>Задать вопрос</button> 
         
         
         </form>

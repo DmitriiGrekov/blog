@@ -4,9 +4,15 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.sitemaps.views import sitemap
 from blog.sitemaps import ArticleSitemap
+from services.sitemaps import ServiceSiteMap 
+from questions.sitemaps import QuestionsSiteMap
+from books_app.sitemaps import BooksSiteMap
 
 sitemaps = {
         'posts':ArticleSitemap,
+        'services':ServiceSiteMap,
+        'questions':QuestionsSiteMap,
+        'books':BooksSiteMap,
         }
 
 urlpatterns = [
@@ -17,7 +23,8 @@ urlpatterns = [
     path('questions/',include('questions.urls',namespace='questions')),
     path('books/',include('books_app.urls',namespace='books_app')),
     path('auth/',include('django.contrib.auth.urls')),
-    path('accounts/',include('accounts.urls')),
+    path('accounts/',include('accounts.urls',namespace='accounts')),
+    path('social-auth/',include('social_django.urls',namespace='social'))
 
     
     

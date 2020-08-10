@@ -24,7 +24,7 @@ class QuestionsModel(models.Model):
         verbose_name_plural = 'Вопросы'
         ordering = ('-publish',)
 
-    tags = TaggableManager(verbose_name='Тэгги')
+    tags = TaggableManager(verbose_name='Ключевые слова')
     
     def get_absolute_url(self):
         return reverse('questions:question_details',args = [self.slug])

@@ -6,6 +6,11 @@ from .forms import CommentForm
 from django.shortcuts import redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+
+
 # Create your views here.
 
 
@@ -80,7 +85,7 @@ def category_book(request,slug):
 
 
 
-    return render(request,'books_app/books_list.html',{"books":books,'categories':categories})
+    return render(request,'books_app/books_list.html',{"books":books,'categories':categories,'category':category})
 
 
 
@@ -89,4 +94,22 @@ def category_book(request,slug):
 
 
 
+@login_required
+@require_POST
+def books_like(request):
+    post_id = request.POST.get('id')
+    action = request.POST.get('action')
+    print(post_id)
+    print(action)
+    if post_id and action:
+        try:
+            book= Books.objects.get(id=post_id)
+            if action == 'like':
+                book.users_like.add(request.user)
+            else:
+                book.users_like.remove(request.user)
 
+            return JsonResponse({'status':'ok'})
+        except:
+            pass
+    return JsonResponse({'status':'ok'})

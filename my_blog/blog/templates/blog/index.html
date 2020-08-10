@@ -1,7 +1,8 @@
 {% extends 'blog/base.html'%}
 {% block title%}Главная {% endblock%}
+{% block meta_description%} Самые новые и интересные статьи этого блога {% endblock%}
 
-
+{% block meta_keyword%}html, css, javascript, python, php, ajax, django, веб сервисы{% endblock %}
 
 
 
@@ -27,7 +28,7 @@
                                <div class="row">
                                	<div class="col-lg-6">
                                     
-                                    <a class='btn btn-secondary' href="{{post.get_absolute_url}}" style='text-decoration: none;color:#fff;'>Читать</a>
+                                    <a class='btn btn-primary' href="{{post.get_absolute_url}}" style='text-decoration: none;color:#fff;'>Читать</a>
                                	</div>
                                	<div class="col-lg-6">
                                     <p class="card-text"><small class="text-muted">Создано {{post.publish}}</small></p>
@@ -62,7 +63,7 @@
                                <div class="row">
                                	<div class="col-lg-6">
                                     
-                                    <a class='btn btn-secondary' href="{{post.get_absolute_url}}" style='text-decoration: none;color:#fff;'>Читать</a>
+                                    <a class='btn btn-primary' href="{{post.get_absolute_url}}" style='text-decoration: none;color:#fff;'>Читать</a>
                                	</div>
                                	<div class="col-lg-6">
                                     <p class="card-text"><small class="text-muted">Создано {{post.publish}}</small></p>
@@ -109,7 +110,7 @@
                         
                         
                         
-                  <button class="btn btn-outline-success ml-1" type="submit">Поиск</button>
+                  <button class="btn btn-outline-primary ml-1" type="submit">Поиск</button>
                         </div>
             
             

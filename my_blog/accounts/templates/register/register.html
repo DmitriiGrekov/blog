@@ -119,7 +119,7 @@
  float: right;
  font-size: 14px;
  color: #fff;
- background: #00b4ef;
+ background: #007bff;
  border-radius: 30px;
  padding: 10px 25px;
  border: none;
@@ -146,6 +146,10 @@
  <form class="form-horizontal" method='post' action=''>
      {% csrf_token%}
  <span class="heading">РЕГИСТРАЦИЯ</span>
+ {% if message%}
+
+ <div class='form-group'><h5 class='card-text text-danger'>{{message}}</h5></div>
+ {% endif%}
  <div class="form-group">
      {{form.username}}
 
@@ -160,6 +164,7 @@
 <div class="form-group">
      {{form.password2}}
  </div>
+
  <div class="form-group">
  <button type="submit" class="btn btn-default">ЗАРЕГЕСТРИРОВАТЬСЯ</button>
  </div>

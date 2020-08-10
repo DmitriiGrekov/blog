@@ -14,7 +14,7 @@ SECRET_KEY = 'p#t$p=5j!8c%q57rcqo@$nf3)-(z#emhpxzcwa7&)b65=^lapj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','93b8058091af.ngrok.io','5021fc37ef0a.ngrok.io','306151906cf6.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1','mysite.com','67743ee9085f.ngrok.io']
 
 
 # Application definition
@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'books_app',
     'accounts',
     'widget_tweaks',
+    'social_django',
+
 ]
 SITE_ID = 1
 
@@ -99,7 +101,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+        'accounts.authentication.EmailAuthBackend',
 
+        ]
+SOCIAL_AUTH_AUTHENTICATION_BACKENDS = [
+        ]
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 

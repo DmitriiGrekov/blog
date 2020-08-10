@@ -7,6 +7,9 @@ from .forms import CommentForm
 from django.db.models import Q
 from services.models import ServiceModel
 from services.models import ServicePost
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -81,3 +84,20 @@ def post_category(request,slug):
         'posts': posts,
         'categories':categories,
         'services':services})
+
+@login_required
+@require_POST
+def post_like(request):
+    post_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if post_id and action:
+        try:
+            post = Article.objects.get(id=post_id)
+            if action == 'like':
+                post.users_like.add(request.user)
+            else:
+                post.users_like.remove(request.user)
+            return JsonResponse({'status':'ok'})
+        except:
+            pass
+    return JsonResponse({'status':'ok'})

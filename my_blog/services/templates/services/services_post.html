@@ -1,8 +1,9 @@
 {% extends 'blog/base.html'%}	
 {% block title%}{{post.title}} {% endblock%}
 
+{% block meta_description%}{{post.meta_description}}{% endblock%}
 
-
+{% block meta_keyword%} {{post.meta_keywords}}{% endblock %}
 {% block content %}
 		<div class="row">
 			<div class="col-lg-8 main-content detail_content">
@@ -14,6 +15,26 @@
                 <p class="card-text mb-3"><small class="text-muted">Автор {{post.author}}: Создано {{post.create}}</small></p>
                 {{post.body|safe}}
             </div>
+{% with total_likes=post.service_like.count service_like=post.service_like.all %}
+            <div class="card-body">
+<div>
+<span class="count" style='font-size:16px;'>
+<span style='font-size:16px;' class="total text-uppercase ml-3 mt-2">{{ total_likes }}  </span>
+like{{total_likes|pluralize}}
+</span>
+<a href="#" data-id="{{ post.id }}" data-action="{% if request.user in service_like%}un{% endif %}like"  class="like button btn btn-{% if request.user in service_like%}outline-{% endif %}success ml-2">
+{% if request.user not in service_like%}
+Like
+{% else %}
+Unlike
+{% endif %}
+</a>
+</div>
+</div>
+            
+
+
+            {% endwith %}
           </div>
          {% with comments.count as total_comments %}
           <p class ='ml-3' style='font-size: 19px;'>Комментариев ({{total_comments}})</p>
@@ -35,6 +56,7 @@
           {% endfor %}
 
 
+    {% if request.user.is_authenticated%}
           <form class='' action = '' method = 'post'>
               {% csrf_token %}
             <p class='ml-3' style='font-size: 19px;'>Добавить комментарий</p>
@@ -51,28 +73,11 @@
   
 </form>
 
-        
+     {% else%}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
+          <p class ='ml-3 mt-3 mb-3' style='font-size: 19px;'>Чтобы оставить комментарий авторизуйтесь</p>
+          {% endif%}
+               
                 </div>	
             
             
@@ -102,3 +107,32 @@
 
 
     {% endblock%}	
+{% block domready %}
+
+    $('a.like').click(function(e){
+        e.preventDefault();
+        $.post(
+        '{% url 'service:service_like'%}',
+        {id:$(this).data('id'),action:$(this).data('action')},
+        function(data){
+        console.log(data)
+        if(data['status']=='ok'){
+        var previous_action = $('a.like').data('action');
+        $('a.like').data('action',previous_action =='like' ? 'unlike':'like');
+        $('a.like').text(previous_action =='like' ? 'Unlike':'Like');
+        var previous_likes = parseInt($('span.count .total').text());
+        $('span.count .total').text(
+
+        previous_action == 'like'?previous_likes+1:previous_likes-1);
+        }
+        }
+        )
+
+
+    })
+
+
+
+
+
+{% endblock %}

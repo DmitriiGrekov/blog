@@ -17,7 +17,7 @@ class QuestionForm(ModelForm):
         widgets = {'title':TextInput(attrs={'class':'form-control mb-2 w-100','placeholder':'Заголовок'}),
                    'name':TextInput(attrs={'class':'form-control mb-2 w-100','placeholder':'Имя'}),
                    'email':EmailInput(attrs ={'class':'form-control mb-2 w-100','placeholder':'Email'}),
-                   'tags':TextInput(attrs = {'class':'form-control mb-2 w-100','placeholder':'Тэгги'}),
+                   'tags':TextInput(attrs = {'class':'form-control mb-2 w-100','placeholder':'Ключевые слова (пример: html, css, js)'}),
                    'question':Textarea(attrs = {'class':'form-control mb-2 w-100','id':'exampleFormControlTextarea1','placeholder':'Текст вопроса'}),
                    'question_image':FileInput(attrs = {'class':'form-control-file mb-2 '})}
     

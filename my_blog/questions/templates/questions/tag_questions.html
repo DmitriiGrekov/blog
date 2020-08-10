@@ -1,6 +1,7 @@
 {% extends 'blog/base.html'%}
-{% block title%}Главная {% endblock%}
+{% block title%}Вопросы по {{tag}}{% endblock%}
 
+{% block meta_keyword%}вопросы, html, css, js, python, django{% endblock %}
 
 
 
@@ -24,7 +25,7 @@
                                <div class="row">
                                	<div class="col-lg-6">
                                     
-                                    <a class='btn btn-secondary' href='{{question.get_absolute_url}}' style='text-decoration: none;color:#fff;'>Посмотреть ответ</a>
+                                    <a class='btn btn-primary' href='{{question.get_absolute_url}}' style='text-decoration: none;color:#fff;'>Посмотреть ответ</a>
                                	</div>
                                	<div class="col-lg-6">
                                     <p class="card-text"><small class="text-muted">Создано {{question.publish}}</small></p>
@@ -59,7 +60,7 @@
 
 			<div class="col-lg-4  mb-3 main-sidebar">
 
-                <a href='{% url 'questions:create_questions'%}' class='btn btn-success mb-3 w-100'>Добавить вопрос</a>
+                <a href='{% url 'questions:create_questions'%}' class='btn btn-primary mb-3 w-100'>Добавить вопрос</a>
                 <div class='container-fluid'>
                         
                     <nav class="navbar text-center p-0 mb-3">
@@ -77,7 +78,7 @@
                         
                         
                         
-                  <button class="btn btn-outline-success ml-2" type="submit">Поиск</button>
+                  <button class="btn btn-outline-primary ml-2" type="submit">Поиск</button>
                         </div>
             
             

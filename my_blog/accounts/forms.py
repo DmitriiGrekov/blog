@@ -9,9 +9,14 @@ class RegisterForm(UserCreationForm):
     password1 = forms.CharField(help_text='Введите паролт',widget=PasswordInput(attrs={'class':'form-control','placeholder':'Пароль'}))
     
     password2 = forms.CharField(help_text='Введите паролт',widget=PasswordInput(attrs={'class':'form-control','placeholder':'Подтверждение пароля'}))
+    firstname=forms.CharField(help_text='Введите Имя',widget=TextInput(attrs={'class':'form-control','placeholder':'Введите Имя'}))
+
+    lastname=forms.CharField(help_text='Введите фамилию',widget=TextInput(attrs={'class':'form-control','placeholder':'Введите Фамилию'}))
+    User._meta.get_field('email')._unique = True
+
+    User._meta.get_field('username')._unique = True
     class Meta:
         model = User
-        fields = ('username','email','password1','password2')
+        fields = ('username','email','password1','password2','first_name','last_name')
         widgets = {'username':TextInput(attrs = {'class':'form-control','placeholder':'Логин'})}
-
 

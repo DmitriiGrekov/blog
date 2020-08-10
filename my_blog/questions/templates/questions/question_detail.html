@@ -1,7 +1,9 @@
 {% extends 'blog/base.html'%}	
 {% block title%}{{question.title}} {% endblock%}
 
+{% block meta_description%}{{question.title}} {{question.question}}{% endblock%}
 
+{% block meta_keyword%}{% for t in question.tags.all%}{{t.name}}, {%endfor%}{% endblock %}
 
 {% block content %}
 		<div class="row">
@@ -74,7 +76,7 @@
 			<div class="col-lg-4 main-sidebar">
 				<div class="list-group sticky-top mt-3">
 
-                    <a href='{% url 'questions:create_questions'%}' class='btn btn-success mb-3 w-100'>Добавить вопрос</a>
+                    <a href='{% url 'questions:create_questions'%}' class='btn btn-primary mb-3 w-100'>Добавить вопрос</a>
 					<h1 class = 'sidebar-category pl-3'>Тэгги</h1>
                     {% for tag in tags %}
 

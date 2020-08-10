@@ -12,7 +12,7 @@ class ServiceModelAdmin(admin.ModelAdmin):
 
 @admin.register(ServicePost)
 class ServicePostModelAdmin(admin.ModelAdmin):
-    list_display = ('title','author','slug','publish')
+    list_display = ('id','title','author','slug','publish')
     prepopulated_fields = {'slug':('title',)}
 
 @admin.register(Comment)

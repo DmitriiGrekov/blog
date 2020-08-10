@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+from django.conf import settings
 
 class ServiceModel(models.Model):
     title = models.CharField(max_length = 50)
@@ -36,6 +36,10 @@ class ServicePost(models.Model):
     update = models.DateTimeField(auto_now = True)
     status = models.CharField(max_length = 10,choices = STATUS_CHOICE,default = 'draft')
     image = models.ImageField()
+    meta_description = models.CharField(max_length = 255,verbose_name='Мета дескриптион')
+    meta_keywords = models.CharField(max_length = 255,verbose_name = 'Мета ключевые слова')
+
+    service_like= models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='service_like',blank=True)
 
     class Meta:
         ordering = ('-publish',)

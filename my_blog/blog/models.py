@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.sitemaps import Sitemap
+from django.conf import settings
 
 class Category(models.Model):
     title = models.CharField(max_length=50,verbose_name='Категория')
@@ -25,6 +26,8 @@ class Article(models.Model):
             ('publish',"Publish")
             )
     author = models.ForeignKey(User,on_delete = models.CASCADE,related_name = 'blog_posts')
+    meta_description = models.CharField(max_length=250,verbose_name='Мета описание')
+    meta_keyword = models.CharField(max_length = 250,verbose_name='Ключевые слова (ключ 1, ключ 2, ключ 3…)')
     category = models.ForeignKey(Category,on_delete = models.CASCADE)
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length = 250,unique = True)
@@ -34,6 +37,7 @@ class Article(models.Model):
     update = models.DateTimeField(auto_now = True)
     status = models.CharField(max_length = 10,choices = STATUS_CHOICE,default = 'draft')
     image = models.ImageField()
+    users_like = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='articles_like',blank=True)
 
     class Meta:
         ordering = ('-publish',)
